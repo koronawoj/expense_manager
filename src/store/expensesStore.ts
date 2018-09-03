@@ -7,7 +7,9 @@ export interface Expense {
 }
 
 export class ExpensesStore {
-    @observable expensesList: Expense[] = []
+    @observable expensesList: Expense[] = [];
+
+    @observable currentRate: number = 4.382;
 
     @computed
     get expanseUnder100(): number {
