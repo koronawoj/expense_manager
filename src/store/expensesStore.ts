@@ -1,28 +1,32 @@
 import { observable, action, computed } from 'mobx'
 
-export interface Expense {
-    id: number
-    title: string
-    amount: number
+export interface IExpense {
+  id: number
+  title: string
+  amount: number
 }
 
 export class ExpensesStore {
-    @observable expensesList: Expense[] = [];
+  @observable
+  public expensesList: IExpense[] = []
 
-    @observable currentRate: number = 4.382;
+  @observable
+  public currentRate: number = 4.382
 
-    @computed
-    get expanseUnder100(): number {
-        return this.expensesList.filter((expense) => expense.amount < 100).length
-    }
+  @computed
+  get expanseUnder100(): number {
+    return this.expensesList.filter(expense => expense.amount < 100).length
+  }
 
-    @action
-    addExpanse(title: string, amount: number, id: number) {
-        this.expensesList.push({ title, amount, id })
-    }
+  @action
+  public addExpanse(title: string, amount: number, id: number) {
+    this.expensesList.push({ title, amount, id })
+  }
 
-    @action
-    deleteExpense(id: number) {
-        this.expensesList = this.expensesList.filter((expense:Expense) => expense.id !== id)
-    }
+  @action
+  public deleteExpense(id: number) {
+    this.expensesList = this.expensesList.filter(
+      (expense: IExpense) => expense.id !== id
+    )
+  }
 }
