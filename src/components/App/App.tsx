@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { Provider, observer } from 'mobx-react'
-import { Header } from './'
+import { Header, AddExpensePanel } from '../index'
 import { StyleAppWrapper } from './App.style'
-import { IExpense, ExpensesStore } from '../store/expensesStore'
-// import { TodoAdd } from './todo.add'
-// import { TodoList } from './todo.list'
+import { IExpense, ExpensesStore } from '../../store/expensesStore'
+
 @observer
-export default class App extends React.Component {
+export class App extends React.Component {
   private expensesStore: ExpensesStore = new ExpensesStore()
 
   private handleDelete = (id: number) => {
@@ -21,7 +20,7 @@ export default class App extends React.Component {
     return (
       <StyleAppWrapper>
         <Header currentRate={this.expensesStore.currentRate} />
-        {/*<AddExpensePanel/>*/}
+        <AddExpensePanel />
         {/*<ListExpenses/>*/}
         {/*<div>Expenses: {this.expensesStore.expensesList.length}</div>*/}
         {/*<button onClick={() => {*/}

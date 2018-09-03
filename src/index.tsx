@@ -1,9 +1,8 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import { injectGlobal } from 'emotion'
 
-import App from "./components/App";
-
+import { App } from './components/'
 
 injectGlobal`
     body {
@@ -13,4 +12,4 @@ injectGlobal`
     }
 `
 
-ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
+ReactDOM.render(<App />, document.getElementById('root') as HTMLElement)
