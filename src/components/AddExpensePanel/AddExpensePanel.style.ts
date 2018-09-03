@@ -34,7 +34,7 @@ export const StyleRowInput = styled('div')`
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
-  margin: 10px 0;
+  margin: 0 0 10px 0;
   div {
     flex: 1;
   }
@@ -47,6 +47,9 @@ export const StyleRowInput = styled('div')`
       outline: none;
       border: 1px solid #1fb6ff;
     }
+  }
+  &:last-child {
+    margin: 0;
   }
 `
 
@@ -67,6 +70,16 @@ export const StyleButton = styled('div')`
     background-color: #1fb6ff;
     color: #ffffff;
   }
+`
+
+export const ErrorLabel = styled('div')`
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+  color: #ff0000;
+  font-size: 12px;
+  height: 20px;
 `
 
 // export const StyleHeaderText = styled('div')<IAddExpensePanel>`

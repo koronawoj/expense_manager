@@ -17,10 +17,20 @@ export class ExpensesStore {
   get expanseUnder100(): number {
     return this.expensesList.filter(expense => expense.amount < 100).length
   }
+  @computed
+  get calculateTotal(): number {
+    return this.expensesList.reduce((acc, cur) => acc + cur.amount, 0)
+  }
+
+  calculateAmount(amount: number) {
+    return computed(() => {
+      return (amount / this.currentRate).toFixed(2)
+    }).get()
+  }
 
   @action
-  public addExpanse(title: string, amount: number, id: number) {
-    this.expensesList.push({ title, amount, id })
+  public addExpanse(expense: IExpense) {
+    this.expensesList.push(expense)
   }
 
   @action
