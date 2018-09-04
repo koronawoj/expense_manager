@@ -1,6 +1,10 @@
 import * as React from 'react'
 import { IExpense } from '../../store/expensesStore'
-import { StyleHeader, StyleListWrapper } from './ListExpenses.style'
+import {
+  StyleListWrapper,
+  StyleCol,
+  StyleColDelete,
+} from './ListExpenses.style'
 import { observer } from 'mobx-react'
 
 interface IListExpenses {
@@ -18,28 +22,29 @@ export class ListExpenses extends React.PureComponent<IListExpenses> {
   public render() {
     return (
       <div>
-        <StyleHeader>
+        <StyleListWrapper header={true}>
           <div>
-            <div>Title</div>
-            <div>Amount (PLN)</div>
-            <div>Amount (EUR)</div>
-            <div>Options</div>
+            <StyleCol flex={2}>Title</StyleCol>
+            <StyleCol>Amount (PLN)</StyleCol>
+            <StyleCol>Amount (EUR)</StyleCol>
+            <StyleCol>Options</StyleCol>
           </div>
-        </StyleHeader>
+        </StyleListWrapper>
         <StyleListWrapper>
           {this.props.expenses.map((expense: IExpense) => {
             return (
               <div>
-                <div>{expense.title}</div>
-                <div>{expense.amount}</div>
-                <div>{this.calculateAmount(expense.amount)}</div>
-                <div
+                <StyleCol flex={2}>{expense.title}</StyleCol>
+                <StyleCol>{expense.amount}</StyleCol>
+                <StyleCol>{this.calculateAmount(expense.amount)}</StyleCol>
+                <StyleColDelete
+                  delete={true}
                   onClick={() => {
                     this.props.onDelete(expense.id)
                   }}
                 >
                   X
-                </div>
+                </StyleColDelete>
               </div>
             )
           })}

@@ -22,7 +22,7 @@ export class ExpensesStore {
     return this.expensesList.reduce((acc, cur) => acc + cur.amount, 0)
   }
 
-  calculateAmount(amount: number) {
+  public calculateAmount(amount: number) {
     return computed(() => {
       return (amount / this.currentRate).toFixed(2)
     }).get()

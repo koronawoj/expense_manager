@@ -1,47 +1,57 @@
 import styled, { css } from 'react-emotion'
 
 interface IListExpenses {
-  font: string
+  header?: boolean
+    flex?:number
+    delete?:boolean
 }
 
-const rowStandard = css`
+export const StyleListWrapper = styled('div')<IListExpenses>`
+  > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  div {
+    background-color: ${props => props.header ? "#009eeb" : "#85d7ff"};
+    margin-top: 2px;
+    transition: 0.3s;
+    &:nth-child(even) {
+      background-color: #1fb6ff;
+    }
+    &:hover {
+     background-color: ${props => props.header ? "#009eeb" : "#6aa6c1"};
+    
+    }
+  } 
+`
+
+const myStyle = css`
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    flex: 1;
     font-size: 16px;
     padding: 20px 5px;
     box-sizing: border-box;
     color: #ffffff;
-    &:first-child {
-      flex: 2;
-    }
-  }
 `
 
-export const StyleHeader = styled('div')`
-  > div {
-    display: flex;
-    composes: ${rowStandard};
-    background-color: #009eeb;
-  }
+export const StyleCol = styled('div')<IListExpenses>`
+    composes: ${myStyle};
+        justify-content: flex-start;
+    flex: ${props => props.flex ? props.flex  : "1"};
+
 `
 
-export const StyleListWrapper = styled('div')`
-  > div {
+export const StyleColDelete = styled('div')<IListExpenses>`
+    composes: ${myStyle};
     display: flex;
-    composes: ${rowStandard};
-    background-color: #1fb6ff;
-    margin-top: 2px;
-    &:nth-child(odd) {
-      background-color: #85d7ff;
+    justify-content: center;
+    flex:1;
+    cursor:pointer;
+    transition: 0.3s;
+    &:hover {
+      background-color: #847171;
     }
-  }
 `
+
 
 // export const StyleHeaderText = styled('div')<IListExpenses>`
 //   font-size: ${props => props.font};
