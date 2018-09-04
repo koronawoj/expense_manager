@@ -35,9 +35,10 @@ export const StyleListWrapper = styled('div')`
   > div {
     display: flex;
     composes: ${rowStandard};
-    background-color: #85d7ff;
+    background-color: #1fb6ff;
+    margin-top: 2px;
     &:nth-child(odd) {
-      background-color: #1fb6ff;
+      background-color: #85d7ff;
     }
   }
 `
