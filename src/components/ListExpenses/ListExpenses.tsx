@@ -3,7 +3,8 @@ import { IExpense } from '../../store/expensesStore'
 import {
   StyleListWrapper,
   StyleCol,
-  StyleColDelete,
+  StyleOption,
+  StyleColOptions,
 } from './ListExpenses.style'
 import { observer } from 'mobx-react'
 
@@ -14,6 +15,7 @@ interface IListExpenses {
     currency: string
   }
   onDelete: (id: number) => void
+  onEdit: (id: number) => void
 }
 
 @observer
@@ -36,18 +38,27 @@ export class ListExpenses extends React.PureComponent<IListExpenses> {
         <StyleListWrapper>
           {this.props.expenses.map((expense: IExpense) => {
             return (
-              <div>
+              <div key={expense.id}>
                 <StyleCol flex={2}>{expense.title}</StyleCol>
                 <StyleCol>{expense.amount}</StyleCol>
                 <StyleCol>{this.calculateAmount(expense.amount)}</StyleCol>
-                <StyleColDelete
-                  delete={true}
-                  onClick={() => {
-                    this.props.onDelete(expense.id)
-                  }}
-                >
-                  X
-                </StyleColDelete>
+                <StyleColOptions>
+                  <StyleOption
+                    delete={true}
+                    onClick={() => {
+                      this.props.onDelete(expense.id)
+                    }}
+                  >
+                    DELETE
+                  </StyleOption>
+                  <StyleOption
+                    onClick={() => {
+                      this.props.onEdit(expense.id)
+                    }}
+                  >
+                    EDIT
+                  </StyleOption>
+                </StyleColOptions>
               </div>
             )
           })}

@@ -14,6 +14,7 @@ import { Profiler } from 'inspector'
 interface IAddExpensePanelProps {
   onAddExpense: (expense: IExpense) => void
   onChangeCurrencyRate: (currencyRate: number, currency: string) => void
+  editExpense: IExpense
 }
 
 interface IAddExpensePanelState {
@@ -46,9 +47,11 @@ export class AddExpensePanel extends React.Component<
     super(props)
     this.state = {
       newExpense: {
-        title: '',
-        amount: '',
-        id: 0,
+        title: this.props.editExpense.title || '',
+        amount: this.props.editExpense.amount
+          ? this.props.editExpense.amount.toString()
+          : '',
+        id: this.props.editExpense.id || 0,
       },
       error: {
         title: '',
@@ -64,6 +67,16 @@ export class AddExpensePanel extends React.Component<
       USD: 3.724,
       CHF: 3.828,
     }
+  }
+
+  private static getDerivedStateFromProps(
+    nextProps: IAddExpensePanelProps,
+    prevState: IAddExpensePanelState
+  ): any {
+    if (nextProps.editExpense.title)
+      return {
+        newExpense: nextProps.editExpense,
+      }
   }
 
   private testInput = (title: string, amount: number) => {
@@ -105,7 +118,7 @@ export class AddExpensePanel extends React.Component<
       this.props.onAddExpense({
         title: this.state.newExpense.title,
         amount: parseFloat(this.state.newExpense.amount),
-        id: data.getTime(),
+        id: this.state.newExpense.id || data.getTime(),
       })
     }
   }
@@ -115,7 +128,8 @@ export class AddExpensePanel extends React.Component<
     if (
       (e.currentTarget.name === 'amount' &&
         regex.test(e.currentTarget.value)) ||
-      e.currentTarget.name === 'title'
+      e.currentTarget.name === 'title' ||
+      e.currentTarget.value === ''
     ) {
       this.setState({
         newExpense: {
@@ -215,7 +229,7 @@ export class AddExpensePanel extends React.Component<
               this.handleAddExpense()
             }}
           >
-            Add
+            {this.state.newExpense.id ? 'Edit' : 'Add'}
           </StyleButton>
         </div>
       </StyleAddExpensePanelWrapper>
