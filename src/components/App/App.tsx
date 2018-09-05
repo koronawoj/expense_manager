@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import { Header, AddExpensePanel, ListExpenses } from '../index'
-import { StyleAppWrapper } from './App.style'
+import { StyleAppWrapper, StyleNoExpenses } from './App.style'
 import { IExpense, ExpensesStore } from '../../store/expensesStore'
 import { toJS } from 'mobx'
 
@@ -84,19 +84,27 @@ export class App extends React.Component<
           onAddExpense={this.handleAddExpense}
           onChangeCurrencyRate={this.handleChangeCurrentRate}
         />
-        <ListExpenses
-          expenses={this.expensesStore.expensesList}
-          currentRate={this.expensesStore.currentRate}
-          onDelete={this.handleDelete}
-          onEdit={this.handleEdit}
-        />
-        <div>
-          Sum: {this.expensesStore.calculateTotal} (
-          {this.expensesStore.calculateAmount(
-            this.expensesStore.calculateTotal
-          )}{' '}
-          {this.expensesStore.currentRate.currency})
-        </div>
+        {this.expensesStore.expensesList.length > 0 ? (
+          <>
+            <ListExpenses
+              expenses={this.expensesStore.expensesList}
+              currentRate={this.expensesStore.currentRate}
+              onDelete={this.handleDelete}
+              onEdit={this.handleEdit}
+            />
+            <div>
+              Sum: {this.expensesStore.calculateTotal} (
+              {this.expensesStore.calculateAmount(
+                this.expensesStore.calculateTotal
+              )}{' '}
+              {this.expensesStore.currentRate.currency})
+            </div>
+          </>
+        ) : (
+          <StyleNoExpenses>
+            <div>Add expense to render the list.</div>
+          </StyleNoExpenses>
+        )}
       </StyleAppWrapper>
     )
   }
