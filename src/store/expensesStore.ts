@@ -1,9 +1,14 @@
 import { observable, action, computed } from 'mobx'
+import {string} from "prop-types";
 
 export interface IExpense {
   id: number
   title: string
   amount: number
+}
+export interface ICurrenctRate {
+  currencyRate: number
+  currency: string
 }
 
 export class ExpensesStore {
@@ -11,7 +16,11 @@ export class ExpensesStore {
   public expensesList: IExpense[] = []
 
   @observable
-  public currentRate: number = 4.382
+  // public currentRate: number = 4.382
+    public currentRate:ICurrenctRate = {
+      currencyRate: 4.382,
+        currency: 'EUR'
+    }
 
   @computed
   get expanseUnder100(): number {
@@ -24,7 +33,7 @@ export class ExpensesStore {
 
   public calculateAmount(amount: number) {
     return computed(() => {
-      return (amount / this.currentRate).toFixed(2)
+      return (amount / this.currentRate.currencyRate).toFixed(2)
     }).get()
   }
 

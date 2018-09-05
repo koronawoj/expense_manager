@@ -9,14 +9,17 @@ import { observer } from 'mobx-react'
 
 interface IListExpenses {
   expenses: IExpense[]
-  currentRate: number
+  currentRate: {
+    currencyRate: number
+    currency: string
+  }
   onDelete: (id: number) => void
 }
 
 @observer
 export class ListExpenses extends React.PureComponent<IListExpenses> {
   private calculateAmount = (amount: number) => {
-    return (amount / this.props.currentRate).toFixed(2)
+    return (amount / this.props.currentRate.currencyRate).toFixed(2)
   }
 
   public render() {
@@ -26,7 +29,7 @@ export class ListExpenses extends React.PureComponent<IListExpenses> {
           <div>
             <StyleCol flex={2}>Title</StyleCol>
             <StyleCol>Amount (PLN)</StyleCol>
-            <StyleCol>Amount (EUR)</StyleCol>
+            <StyleCol>Amount ({this.props.currentRate.currency})</StyleCol>
             <StyleCol>Options</StyleCol>
           </div>
         </StyleListWrapper>

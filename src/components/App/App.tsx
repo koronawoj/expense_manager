@@ -15,15 +15,24 @@ export class App extends React.Component {
     this.expensesStore.addExpanse(expense)
   }
 
+  private handleChangeCurrentRate = (
+    currencyRate: number,
+    currency: string
+  ) => {
+    this.expensesStore.currentRate = {
+      currencyRate,
+      currency,
+    }
+  }
+
   public render() {
-    console.log(
-      'this.expensesStore.expensesList',
-      this.expensesStore.calculateAmount(this.expensesStore.calculateTotal)
-    )
     return (
       <StyleAppWrapper>
         <Header currentRate={this.expensesStore.currentRate} />
-        <AddExpensePanel onAddExpense={this.handleAddExpense} />
+        <AddExpensePanel
+          onAddExpense={this.handleAddExpense}
+          onChangeCurrencyRate={this.handleChangeCurrentRate}
+        />
         <ListExpenses
           expenses={this.expensesStore.expensesList}
           currentRate={this.expensesStore.currentRate}
@@ -34,7 +43,7 @@ export class App extends React.Component {
           {this.expensesStore.calculateAmount(
             this.expensesStore.calculateTotal
           )}{' '}
-          EUR)
+          {this.expensesStore.currentRate.currency})
         </div>
       </StyleAppWrapper>
     )

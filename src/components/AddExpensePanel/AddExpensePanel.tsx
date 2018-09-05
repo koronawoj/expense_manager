@@ -5,12 +5,15 @@ import {
   StyleRowInput,
   StyleButton,
   ErrorLabel,
+  StyleSelect,
 } from './AddExpensePanel.style'
 import { IExpense } from '../../store/expensesStore'
 import { ReactElement, ReactEventHandler, ReactHTMLElement } from 'react'
+import { Profiler } from 'inspector'
 
 interface IAddExpensePanelProps {
   onAddExpense: (expense: IExpense) => void
+  onChangeCurrencyRate: (currencyRate: number, currency: string) => void
 }
 
 interface IAddExpensePanelState {
@@ -23,12 +26,22 @@ interface IAddExpensePanelState {
     title: string
     amount: string
   }
+  value: string
 }
 
 export class AddExpensePanel extends React.Component<
   IAddExpensePanelProps,
   IAddExpensePanelState
 > {
+  private titleInput: React.RefObject<HTMLInputElement>
+  private amountInput: React.RefObject<HTMLInputElement>
+  private currencyList: {
+    EUR: number
+    GBP: number
+    USD: number
+    CHF: number
+    [key: string]: number
+  }
   constructor(props: IAddExpensePanelProps) {
     super(props)
     this.state = {
@@ -41,6 +54,15 @@ export class AddExpensePanel extends React.Component<
         title: '',
         amount: '',
       },
+      value: 'EUR',
+    }
+    this.titleInput = React.createRef()
+    this.amountInput = React.createRef()
+    this.currencyList = {
+      EUR: 4.382,
+      GBP: 4.779,
+      USD: 3.724,
+      CHF: 3.828,
     }
   }
 
@@ -104,6 +126,40 @@ export class AddExpensePanel extends React.Component<
     }
   }
 
+  private keyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.keyCode == 13) {
+      if (
+        !isNaN(parseFloat(this.state.newExpense.amount)) &&
+        this.state.newExpense.title.length >= 5 &&
+        this.titleInput.current
+      ) {
+        this.handleAddExpense()
+        this.titleInput.current.focus()
+        return
+      }
+      if (this.state.newExpense.title.length >= 5 && this.amountInput.current) {
+        this.amountInput.current.focus()
+        return
+      }
+      if (
+        !isNaN(parseFloat(this.state.newExpense.amount)) &&
+        this.titleInput.current
+      ) {
+        this.titleInput.current.focus()
+        return
+      }
+    }
+  }
+  private handleonSelectCurency = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.currentTarget.value) {
+      this.setState({ value: e.currentTarget.value })
+      this.props.onChangeCurrencyRate(
+        this.currencyList[e.currentTarget.value],
+        e.currentTarget.value
+      )
+    }
+  }
+
   public render() {
     return (
       <StyleAddExpensePanelWrapper>
@@ -116,9 +172,13 @@ export class AddExpensePanel extends React.Component<
               type="text"
               name="title"
               value={this.state.newExpense.title}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                this.keyPress(e)
+              }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.handleOnChange(e)
               }
+              ref={this.titleInput}
             />
           </StyleRowInput>
           <ErrorLabel>{this.state.error.amount}</ErrorLabel>
@@ -128,13 +188,28 @@ export class AddExpensePanel extends React.Component<
               type="text"
               name="amount"
               value={this.state.newExpense.amount}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                this.keyPress(e)
+              }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.handleOnChange(e)
               }
+              ref={this.amountInput}
             />
           </StyleRowInput>
         </div>
         <div>
+          <StyleSelect
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              this.handleonSelectCurency(e)
+            }}
+            value={this.state.value}
+          >
+            <option value="EUR">1EUR = 4.382 PLN</option>
+            <option value="GBP">1GBP = 4.779 PLN</option>
+            <option value="USD">1USD = 3.724 PLN</option>
+            <option value="CHF">1CHF = 3.828 PLN</option>
+          </StyleSelect>
           <StyleButton
             onClick={() => {
               this.handleAddExpense()
