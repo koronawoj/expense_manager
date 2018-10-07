@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the heading 1`] = `
+<Styled(div)>
+  <Styled(div)
+    font="24px"
+  >
+    List of expenses
+  </Styled(div)>
+  <Styled(div)
+    font="14px"
+  >
+    1
+    PLN
+     =
+     
+    1.2
+     PLN
+  </Styled(div)>
+</Styled(div)>
+`;
