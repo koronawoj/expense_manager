@@ -49,7 +49,7 @@ export class ListExpenses extends React.PureComponent<IListExpenses> {
         <StyleListWrapper header={true}>
           <div>
             <StyleCol flex={2}>Title</StyleCol>
-            <StyleCol>Amount (PLN)</StyleCol>
+                  <StyleCol onClick={() => console.log()}>Amount (PLN)</StyleCol>
             <StyleCol>Amount ({this.props.currentRate.currency})</StyleCol>
             <StyleCol>Options</StyleCol>
           </div>
@@ -58,8 +58,7 @@ export class ListExpenses extends React.PureComponent<IListExpenses> {
           {this.props.expenses.map((expense: IExpense) => {
             return (
               <div key={expense.id}>
-                      <StyleCol flex={2}>{expense.title}</StyleCol>
-                      
+                <StyleCol flex={2}>{expense.title}</StyleCol>
                 <StyleCol>{expense.amount}</StyleCol>
                 <StyleCol>{this.calculateAmount(expense.amount)}</StyleCol>
                 <OptionsElem
