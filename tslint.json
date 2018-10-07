@@ -1,17 +1,15 @@
 {
-  "defaultServerity": "error",
-  "extends": [
-    "tslint:recommended",
-    "tslint-config-standard",
-    "tslint-react",
-    "tslint-config-prettier"
-  ],
-  "jsRules": {},
-  "rules": {
-    "ordered-imports": false,
-    "object-literal-sort-keys": false,
-    "member-ordering": false,
-    "jsx-no-lambda": false,
-    "jsx-boolean-value": false
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "jsx": "react",
+    "lib": ["dom", "es6", "esnext"],
+    "downlevelIteration": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "baseUrl": "./src"
   }
 }
