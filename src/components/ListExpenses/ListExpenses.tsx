@@ -12,7 +12,7 @@ interface IListExpenses {
   expenses: IExpense[];
   currentRate: {
     currencyRate: number;
-    currency: st;
+    currency: string;
   };
   onDelete: (id: number) => void;
   onEdit: (id: number) => void;
@@ -58,7 +58,8 @@ export class ListExpenses extends React.PureComponent<IListExpenses> {
           {this.props.expenses.map((expense: IExpense) => {
             return (
               <div key={expense.id}>
-                        <StyleCol flex={2}>{expense.title}</StyleCol>
+                      <StyleCol flex={2}>{expense.title}</StyleCol>
+                      
                 <StyleCol>{expense.amount}</StyleCol>
                 <StyleCol>{this.calculateAmount(expense.amount)}</StyleCol>
                 <OptionsElem
