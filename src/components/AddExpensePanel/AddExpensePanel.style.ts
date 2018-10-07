@@ -1,7 +1,7 @@
-import styled, { css } from 'react-emotion'
+import styled, { css } from 'react-emotion';
 
 interface IAddExpensePanel {
-  font: string
+  font: string;
 }
 
 export const StyleAddExpensePanelWrapper = styled('div')`
@@ -13,7 +13,7 @@ export const StyleAddExpensePanelWrapper = styled('div')`
     box-sizing: border-box;
     padding: 20px;
     height: 100%;
-        display: flex;
+    display: flex;
     flex-direction: column;
   }
   & > div:first-child {
@@ -31,7 +31,7 @@ export const StyleAddExpensePanelWrapper = styled('div')`
     padding: 10px;
     border-radius: 10px;
   }
-`
+`;
 
 export const StyleRowInput = styled('div')`
   display: flex;
@@ -55,7 +55,7 @@ export const StyleRowInput = styled('div')`
   &:last-child {
     margin: 0;
   }
-`
+`;
 
 export const StyleButton = styled('div')`
   display: flex;
@@ -70,13 +70,13 @@ export const StyleButton = styled('div')`
   background-color: white;
   transition: all 0.2s;
   cursor: pointer;
-      max-height: 60px;
-    width: 100%;
+  max-height: 60px;
+  width: 100%;
   &:hover {
     background-color: #1fb6ff;
     color: #ffffff;
   }
-`
+`;
 
 export const ErrorLabel = styled('div')`
   display: flex;
@@ -86,18 +86,18 @@ export const ErrorLabel = styled('div')`
   color: #ff0000;
   font-size: 12px;
   height: 20px;
-`
+`;
 export const StyleSelect = styled('select')`
   outline: 0;
   box-shadow: none;
-  border:1px solid #1fb6ff;
+  border: 1px solid #1fb6ff;
   background-image: none;
-    width: 100%;
+  width: 100%;
   height: 25px;
   margin: 0;
   padding-left: 5px;
   cursor: pointer;
-`
+`;
 
 // export const StyleHeaderText = styled('div')<IAddExpensePanel>`
 //   font-size: ${props => props.font};

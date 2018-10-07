@@ -1,1 +1,1 @@
-export * from './ListExpenses'
+export * from './ListExpenses';

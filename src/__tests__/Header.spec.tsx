@@ -1,15 +1,15 @@
-import * as React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
+import toJson from 'enzyme-to-json';
+import * as React from 'react';
 
-import { Header } from "../components/Header";
+import { shallow } from 'enzyme';
+import { Header } from '../components/Header';
 
 const currentRate = {
-    currencyRate: 1.2,
-    currency: 'PLN'
-}
+  currency: 'PLN',
+  currencyRate: 1.2,
+};
 
-it("renders the heading", () => {
-    const result = shallow(<Header currentRate={currentRate}/>);
-    expect(toJson(result)).toMatchSnapshot();
+it('renders the heading', () => {
+  const result = shallow(<Header currentRate={currentRate} />);
+  expect(toJson(result)).toMatchSnapshot();
 });

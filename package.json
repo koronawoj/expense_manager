@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "lint": "tslint 'src/**/*.{ts,tsx}",
-    "test": "jest --env=jsdom --watchAll"
+    "lint": "tslint src/**/*.{ts,tsx}",
+    "lint-fix": "tslint --fix src/**/*.{ts,tsx}",
+    "test": "jest --env=jsdom --watchAll",
+    "format": "prettier --write src/**/*.{ts,tsx}"
   },
   "author": "",
   "license": "ISC",
