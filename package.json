@@ -8,8 +8,7 @@
     "lint": "tslint src/**/*.{ts,tsx}",
     "lint-fix": "tslint --fix src/**/*.{ts,tsx}",
     "test": "jest --env=jsdom --watchAll",
-    "format": "prettier --write src/**/*.{ts,tsx}",
-    "precommit": "lint-staged"
+    "format": "prettier --write src/**/*.{ts,tsx}"
   },
   "author": "",
   "license": "ISC",
@@ -63,6 +62,11 @@
     "testMatch": [
       "**/__tests__/*.(ts|tsx|js)"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
