@@ -1,29 +1,48 @@
-import * as React from 'react'
-import { IExpense } from '../../store/expensesStore'
+import { observer } from 'mobx-react';
+import * as React from 'react';
+import { IExpense } from '../../store/expensesStore';
 import {
-  StyleListWrapper,
   StyleCol,
-  StyleOption,
   StyleColOptions,
-} from './ListExpenses.style'
-import { observer } from 'mobx-react'
+  StyleListWrapper,
+  StyleOption,
+} from './ListExpenses.style';
 
 interface IListExpenses {
-  expenses: IExpense[]
+  expenses: IExpense[];
   currentRate: {
-    currencyRate: number
-    currency: string
-  }
-  onDelete: (id: number) => void
-  onEdit: (id: number) => void
+    currencyRate: number;
+    currency: string;
+  };
+  onDelete: (id: number) => void;
+  onEdit: (id: number) => void;
 }
+
+interface IOption {
+  deleteElem: (id: number) => void;
+  onEdit: (id: number) => void;
+  id: number;
+}
+
+const OptionsElem: React.SFC<IOption> = ({ deleteElem, onEdit, id }) => {
+  const handleDelete = () => {
+    deleteElem(id);
+  };
+  const handleEdit = () => {
+    onEdit(id);
+  };
+  return (
+    <StyleColOptions>
+      <StyleOption delete={true} onClick={handleDelete}>
+        DELETE
+      </StyleOption>
+      <StyleOption onClick={handleEdit}>EDIT</StyleOption>
+    </StyleColOptions>
+  );
+};
 
 @observer
 export class ListExpenses extends React.PureComponent<IListExpenses> {
-  private calculateAmount = (amount: number) => {
-    return (amount / this.props.currentRate.currencyRate).toFixed(2)
-  }
-
   public render() {
     return (
       <div>
@@ -42,28 +61,28 @@ export class ListExpenses extends React.PureComponent<IListExpenses> {
                 <StyleCol flex={2}>{expense.title}</StyleCol>
                 <StyleCol>{expense.amount}</StyleCol>
                 <StyleCol>{this.calculateAmount(expense.amount)}</StyleCol>
-                <StyleColOptions>
-                  <StyleOption
-                    delete={true}
-                    onClick={() => {
-                      this.props.onDelete(expense.id)
-                    }}
-                  >
-                    DELETE
-                  </StyleOption>
-                  <StyleOption
-                    onClick={() => {
-                      this.props.onEdit(expense.id)
-                    }}
-                  >
-                    EDIT
-                  </StyleOption>
-                </StyleColOptions>
+                <OptionsElem
+                  deleteElem={this.handleOnDelete}
+                  onEdit={this.handleOnEdit}
+                  id={expense.id}
+                />
               </div>
-            )
+            );
           })}
         </StyleListWrapper>
       </div>
-    )
+    );
   }
+
+  private calculateAmount = (amount: number) => {
+    return (amount / this.props.currentRate.currencyRate).toFixed(2);
+  };
+
+  private handleOnDelete = (id: number): void => {
+    this.props.onDelete(id);
+  };
+
+  private handleOnEdit = (id: number): void => {
+    this.props.onEdit(id);
+  };
 }

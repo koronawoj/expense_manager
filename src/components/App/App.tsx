@@ -1,81 +1,30 @@
-import * as React from 'react'
-import { observer } from 'mobx-react'
-import { Header, AddExpensePanel, ListExpenses } from '../index'
-import { StyleAppWrapper, StyleNoExpenses } from './App.style'
-import { IExpense, ExpensesStore } from '../../store/expensesStore'
-import { toJS } from 'mobx'
+import { toJS } from 'mobx';
+import { observer } from 'mobx-react';
+import * as React from 'react';
+import { ExpensesStore, IExpense } from '../../store/expensesStore';
+import { AddExpensePanel, Header, ListExpenses } from '../index';
+import { StyleAppWrapper, StyleNoExpenses } from './App.style';
 
-interface IListExpensesProps {}
 interface IListExpensesState {
-  editExpense: IExpense
+  editExpense: IExpense;
 }
 
 @observer
-export class App extends React.Component<
-  IListExpensesProps,
-  IListExpensesState
-> {
-  private expensesStore: ExpensesStore = new ExpensesStore()
-
-  private handleDelete = (id: number) => {
-    this.expensesStore.deleteExpense(id)
-  }
-
-  private handleEdit = (id: number) => {
-    this.setState(
-      {
-        editExpense: toJS(
-          this.expensesStore.expensesList.filter(
-            (elem: IExpense) => elem.id === id
-          )[0]
-        ),
-      },
-      () => {
-        this.setState({
-          editExpense: {
-            id: 0,
-            title: '',
-            amount: 0,
-          },
-        })
-      }
-    )
-  }
-
-  private handleAddExpense = (expense: IExpense) => {
-    let index = this.expensesStore.expensesList.findIndex(
-      (elem: IExpense) => elem.id === expense.id
-    )
-    if (index === -1) {
-      this.expensesStore.addExpanse(expense)
-    } else {
-      this.expensesStore.expensesList[index] = expense
-    }
-  }
-
-  private handleChangeCurrentRate = (
-    currencyRate: number,
-    currency: string
-  ) => {
-    this.expensesStore.currentRate = {
-      currencyRate,
-      currency,
-    }
-  }
+export class App extends React.Component<{}, IListExpensesState> {
+  private expensesStore: ExpensesStore = new ExpensesStore();
 
   constructor(props: {}) {
-    super(props)
+    super(props);
     this.state = {
       editExpense: {
+        amount: 0,
         id: 0,
         title: '',
-        amount: 0,
       },
-    }
+    };
   }
 
   public render() {
-    console.log(this.state.editExpense)
     return (
       <StyleAppWrapper>
         <Header currentRate={this.expensesStore.currentRate} />
@@ -106,6 +55,52 @@ export class App extends React.Component<
           </StyleNoExpenses>
         )}
       </StyleAppWrapper>
-    )
+    );
   }
+
+  private handleDelete = (id: number) => {
+    this.expensesStore.deleteExpense(id);
+  };
+
+  private handleEdit = (id: number) => {
+    this.setState(
+      {
+        editExpense: toJS(
+          this.expensesStore.expensesList.filter(
+            (elem: IExpense) => elem.id === id
+          )[0]
+        ),
+      },
+      () => {
+        this.setState({
+          editExpense: {
+            amount: 0,
+            id: 0,
+            title: '',
+          },
+        });
+      }
+    );
+  };
+
+  private handleAddExpense = (expense: IExpense) => {
+    const index = this.expensesStore.expensesList.findIndex(
+      (elem: IExpense) => elem.id === expense.id
+    );
+    if (index === -1) {
+      this.expensesStore.addExpanse(expense);
+    } else {
+      this.expensesStore.expensesList[index] = expense;
+    }
+  };
+
+  private handleChangeCurrentRate = (
+    currencyRate: number,
+    currency: string
+  ) => {
+    this.expensesStore.currentRate = {
+      currency,
+      currencyRate,
+    };
+  };
 }

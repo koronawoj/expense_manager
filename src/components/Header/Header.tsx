@@ -1,15 +1,16 @@
-import * as React from 'react'
-import { StyleHeaderWrapper, StyleHeaderText } from './Header.style'
+import * as React from 'react';
+import { StyleHeaderText, StyleHeaderWrapper } from './Header.style';
 
 interface IPropsHeader {
   currentRate: {
-    currencyRate: number
-    currency: string
-  }
+    currencyRate: number;
+    currency: string;
+  };
 }
 
 export class Header extends React.PureComponent<IPropsHeader> {
   public render() {
+    const variable = 4;
     return (
       <StyleHeaderWrapper>
         <StyleHeaderText font={'24px'}>List of expenses</StyleHeaderText>
@@ -18,6 +19,6 @@ export class Header extends React.PureComponent<IPropsHeader> {
           {this.props.currentRate.currencyRate} PLN
         </StyleHeaderText>
       </StyleHeaderWrapper>
-    )
+    );
   }
 }
