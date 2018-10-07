@@ -51,7 +51,7 @@ export class ListExpenses extends React.PureComponent<IListExpenses> {
             <StyleCol flex={2}>Title</StyleCol>
             <StyleCol>Amount (PLN)</StyleCol>
             <StyleCol>Amount ({this.props.currentRate.currency})</StyleCol>
-            <StyleCol>Options</StyleCol>
+            <StyleCol onClick={() => console.log()}>Options</StyleCol>
           </div>
         </StyleListWrapper>
         <StyleListWrapper>
